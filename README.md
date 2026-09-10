@@ -4,7 +4,7 @@
 [![Category](https://img.shields.io/badge/Category-Software-emerald.svg)](https://sih.gov.in)
 [![Ministry / Org](https://img.shields.io/badge/Organization-Ministry%20of%20Social%20Justice%20and%20Empowerment%20(MoSJE)-indigo.svg)]()
 [![Theme](https://img.shields.io/badge/Theme-MedTech%20/%20BioTech%20/%20HealthTech-purple.svg)]()
-[![Domain](https://img.shields.io/badge/Domain-Landslide%20&%20Slope%20Stability%20GIS-orange.svg)]()
+[![Domain](https://img.shields.io/badge/Domain-Psychological%20Stress%20&%20Trauma%20AI-rose.svg)]()
 
 ---
 

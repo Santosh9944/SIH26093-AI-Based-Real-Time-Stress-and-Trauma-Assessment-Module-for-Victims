@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIH26093 - AI-Based Real-Time Stress and Trauma Assessment Module for Victims/Complainants Accessing NHAA (14566) and Integrated Portal</title>
+    <title>Emergency AI Crisis Hotline | SIH26093 - NHAA (14566)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN -->
@@ -11,7 +11,7 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -22,12 +22,16 @@
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        brand: {
-                            primary: '#ef4444',
-                            accent: '#f87171',
-                            card: '#111827',
-                            dark: '#080c17'
-                        }
+                        dark: {
+                            base: '#0B0F19',
+                            card: '#0f172a',
+                            border: '#1e293b'
+                        },
+                         neon: {
+                             blue: '#0ea5e9',
+                             teal: '#06b6d4',
+                             cyan: '#22d3ee'
+                         }
                     }
                 }
             }
@@ -35,383 +39,923 @@
     </script>
     <style>
         body {
-            background: radial-gradient(circle at 10% 20%, #0a0f1d 0%, #060913 90%);
+            background-color: #0B0F19;
+            background-image: 
+                radial-gradient(circle at 10% 15%, rgba(255, 30, 86, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 10%, rgba(245, 158, 11, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
             color: #f1f5f9;
         }
-        .glass-panel {
-            background: rgba(17, 24, 39, 0.75);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        
+        .glass-panel-sharp {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.09);
         }
-        .glass-panel:hover {
-            border-color: rgba(255, 255, 255, 0.16);
+        
+        /* Neon Accent Rings */
+            .ring-neon-crimson {
+                border: 1px solid rgba(14, 165, 233, 0.85);
+                box-shadow: 0 0 20px -3px rgba(14, 165, 233, 0.45), inset 0 0 12px -2px rgba(14, 165, 233, 0.25);
+            }
+            .ring-neon-amber {
+                border: 1px solid rgba(6, 182, 212, 0.85);
+                box-shadow: 0 0 20px -3px rgba(6, 182, 212, 0.45), inset 0 0 12px -2px rgba(6, 182, 212, 0.25);
+            }
+            .ring-neon-emerald {
+                border: 1px solid rgba(34, 211, 238, 0.85);
+                box-shadow: 0 0 20px -3px rgba(34, 211, 238, 0.45), inset 0 0 12px -2px rgba(34, 211, 238, 0.25);
+            }
+
+        /* Flashing Glow Alert Keyframes */
+        @keyframes flash-crimson {
+            0%, 100% {
+                border-color: rgba(255, 30, 86, 0.95);
+                box-shadow: 0 0 35px 4px rgba(255, 30, 86, 0.65), inset 0 0 20px 2px rgba(255, 30, 86, 0.4);
+                transform: scale(1);
+            }
+            50% {
+                border-color: rgba(255, 30, 86, 0.4);
+                box-shadow: 0 0 15px -2px rgba(255, 30, 86, 0.25), inset 0 0 8px 0px rgba(255, 30, 86, 0.15);
+                transform: scale(0.995);
+            }
         }
-        .glow-box {
-            box-shadow: 0 0 35px -5px #ef444430;
+        .animate-flash-alert {
+            animation: flash-crimson 1.4s infinite ease-in-out;
         }
+
+        /* Microphone Audio Equalizer Waves */
+        @keyframes soundWave {
+            0%, 100% { height: 6px; }
+            50% { height: 26px; }
+        }
+        .audio-bar-1 { animation: soundWave 0.9s infinite ease-in-out; }
+        .audio-bar-2 { animation: soundWave 0.7s infinite 0.2s ease-in-out; }
+        .audio-bar-3 { animation: soundWave 1.1s infinite 0.4s ease-in-out; }
+        .audio-bar-4 { animation: soundWave 0.8s infinite 0.1s ease-in-out; }
+        .audio-bar-5 { animation: soundWave 1.0s infinite 0.3s ease-in-out; }
+
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #0B0F19; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #334155; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col font-sans antialiased">
+<body class="min-h-screen flex flex-col font-sans antialiased text-slate-100 selection:bg-rose-500 selection:text-white">
 
-    <!-- Top Navigation Header -->
-    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800 px-6 py-3.5 flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-            <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-brand-primary to-brand-accent flex items-center justify-center shadow-lg">
-                <i data-lucide="mountain" class="w-5 h-5 text-white"></i>
+    <!-- Top Mission Header -->
+    <header class="sticky top-0 z-50 glass-panel-sharp border-b border-slate-800/90 px-6 py-3.5 flex items-center justify-between">
+        <div class="flex items-center space-x-3.5">
+            <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-rose-600 via-rose-500 to-amber-500 flex items-center justify-center shadow-lg shadow-rose-950 ring-1 ring-rose-500/60">
+                <i data-lucide="radio" class="w-5 h-5 text-white animate-pulse"></i>
             </div>
             <div>
                 <div class="flex items-center space-x-2">
-                    <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-brand-primary/20 text-brand-accent border border-brand-primary/30">SIH26093</span>
-                    <span class="text-xs font-medium px-2 py-0.5 rounded bg-slate-800 text-slate-300">Landslide & Slope Stability GIS</span>
+                    <span class="text-xs font-mono font-black px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/40">SIH26093</span>
+                    <span class="text-xs font-bold px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1">
+                        <i data-lucide="phone-call" class="w-3 h-3"></i> NHAA 14566
+                    </span>
+                    <span class="text-xs font-medium px-2 py-0.5 rounded bg-slate-800/80 text-slate-300 border border-slate-700/60">Ministry of Social Justice & Empowerment</span>
                 </div>
-                <h1 class="text-sm font-bold text-slate-100 truncate max-w-xl">AI-Based Real-Time Stress and Trauma Assessment Module for Victims/Complainants Accessing NHAA (14566) and Integrated Portal</h1>
+                <h1 class="text-sm font-extrabold text-slate-100 tracking-wide">AI-Based Real-Time Stress & Trauma Assessment Module</h1>
             </div>
         </div>
+
         <div class="flex items-center space-x-3">
-            <div class="hidden lg:flex items-center space-x-2 bg-slate-900/90 px-3 py-1.5 rounded-lg border border-slate-800 text-xs font-mono">
-                <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-emerald-400">STATUS: ACTIVE INFERENCE</span>
+            <div class="hidden md:flex items-center space-x-2.5 bg-[#0e1628] px-3.5 py-1.5 rounded-lg border border-slate-800 text-xs font-mono">
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981] animate-pulse"></span>
+                <span class="text-emerald-400 font-bold">STATUS: INGESTION ACTIVE</span>
+                <span class="text-slate-600">|</span>
+                <span class="text-slate-400">LATENCY: 19ms</span>
             </div>
-            <button onclick="runSimulation()" class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-brand-primary to-brand-accent text-white text-xs font-bold hover:opacity-90 transition shadow-lg flex items-center space-x-1.5">
-                <i data-lucide="play" class="w-3.5 h-3.5"></i>
-                <span>Ingest Slope Sensor Telemetry</span>
+            <button onclick="triggerEmergencySim()" class="px-4 py-1.5 rounded-lg bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white text-xs font-extrabold transition shadow-[0_0_15px_rgba(244,63,94,0.4)] flex items-center space-x-1.5 border border-rose-500/40">
+                <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+                <span>Simulate Critical Intake</span>
             </button>
-            <button onclick="exportData()" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition flex items-center space-x-1.5">
-                <i data-lucide="file-down" class="w-3.5 h-3.5"></i>
-                <span>Export Audit</span>
-            </button>
+            <a href="http://127.0.0.1:8000/docs" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-slate-200 text-xs font-medium border border-slate-700 transition flex items-center space-x-1.5">
+                <i data-lucide="code" class="w-3.5 h-3.5 text-rose-400"></i>
+                <span>FastAPI Docs</span>
+            </a>
         </div>
     </header>
 
-    <!-- Main Workspace Body -->
-    <main class="flex-1 p-6 space-y-6 max-w-[1600px] w-full mx-auto">
+    <!-- Main Mission Control Body -->
+    <main class="flex-1 p-6 space-y-6 max-w-[1700px] w-full mx-auto">
         
-        <!-- Header Banner Card -->
-        <section class="glass-panel rounded-2xl p-6 glow-box relative overflow-hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 relative z-10">
-                <div class="lg:col-span-3 space-y-3">
-                    <div class="flex flex-wrap items-center gap-2">
-                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
-                            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> SIH 2026 Problem Solution
-                        </span>
-                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                            Ministry of Social Justice and Empowerment (MoSJE)
-                        </span>
-                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                            MedTech / BioTech / HealthTech
+        <!-- SECTION 1: TOP ROW - 4 METRIC CARDS (Matching Image 1) -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            
+            <!-- CARD 1: Stress Vulnerability Index (Crimson Ring) -->
+            <div class="glass-panel-sharp rounded-2xl p-5 ring-neon-crimson flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-rose-950/20">
+                <div class="flex items-center justify-between text-slate-400 text-xs font-mono font-semibold">
+                    <span class="flex items-center gap-1.5 text-slate-300">
+                        <i data-lucide="activity" class="w-4 h-4 text-rose-400"></i>
+                        STRESS VULNERABILITY INDEX
+                    </span>
+                    <span class="text-[10px] text-rose-400/90 tracking-wider">LIVE COMPOSITE</span>
+                </div>
+                <div class="my-3 flex items-baseline justify-between">
+                    <div class="text-4xl font-black text-white font-mono tracking-tight" id="top-svi-display">
+                        92.6<span class="text-xl text-rose-400/80 font-normal">/100</span>
+                    </div>
+                    <span id="top-svi-badge" class="px-3 py-1 rounded-full text-xs font-mono font-black bg-rose-500/20 text-rose-400 border border-rose-500/50 shadow-[0_0_15px_rgba(244,63,94,0.4)] uppercase">
+                        CRITICAL RISK
+                    </span>
+                </div>
+                <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                    <span>Acoustic: <strong class="text-rose-400" id="top-acoustic-pct">89.4%</strong></span>
+                    <span>NLP Trauma: <strong class="text-rose-400" id="top-nlp-pct">94.8%</strong></span>
+                </div>
+            </div>
+
+            <!-- CARD 2: Vocal Agitation (Amber Ring) -->
+            <div class="glass-panel-sharp rounded-2xl p-5 ring-neon-amber flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-amber-950/20">
+                <div class="flex items-center justify-between text-slate-400 text-xs font-mono font-semibold">
+                    <span class="flex items-center gap-1.5 text-slate-300">
+                        <i data-lucide="mic" class="w-4 h-4 text-amber-400"></i>
+                        VOCAL AGITATION
+                    </span>
+                    <span class="text-amber-400 font-mono font-bold" id="pitch-hz">318 Hz</span>
+                </div>
+                <div class="my-3 space-y-2">
+                    <div class="flex items-baseline justify-between">
+                        <span class="text-4xl font-black text-white font-mono" id="agitation-percentage">87.4%</span>
+                        <span class="text-xs font-mono text-amber-300 font-bold flex items-center gap-1">
+                            <i data-lucide="trending-up" class="w-3.5 h-3.5"></i> Micro-Tremors
                         </span>
                     </div>
-                    <h2 class="text-2xl font-black tracking-tight text-white">AI-Based Real-Time Stress and Trauma Assessment Module for Victims/Complainants Accessing NHAA (14566) and Integrated Portal</h2>
-                    <p class="text-sm text-slate-300 leading-relaxed line-clamp-3">
-                        • Background Victims and complainants belonging to Scheduled Castes and Scheduled Tribes who approach the National Helpline Against Atrocities (14566), Integrated Portal, chatbot, mobile application, IVRS, or other digital platforms often experience severe emotional distress arising from caste-based discrimination, violence, rape, gang rape, murder of family members, social boycott, displacement, threats, and prolonged legal proceedings. Presently, there is no standardized mechanism for assessing the psychological condition and vulnerability of victims at the time of first contact with authorities.• Problem Statement Design and develop an AI-enabled Real-Time Stress and Trauma Assessment Module that can assess the psychological stress, trauma, fear, anxiety, and vulnerability levels of victims/complainants interacting through NHAA (14566), the Integrated Portal, chatbot,IVRS, mobile application, or any other approved digital interface.• Expected Solution The solution should:• Analyse voice interactions, speech patterns, pauses, pitch variation, emotional indicators, and textual narratives.• Use Natural Language Processing (NLP), Speech Analytics, and Emotion AI to identify signs of trauma and distress.• Generate a Stress Vulnerability Index (SVI) on a predefined scale.• Categorize victims into Low, Moderate, High, and Critical Risk categories.• Detect indicators of severe trauma, fear, depression, suicidal ideation,intimidation, social isolation, and extreme vulnerability.• Automatically recommend counselling, legal aid, medical assistance, police intervention, witness protection, or emergency support based on risk level.• Support multilingual interactions, including major Indian languages and dialects.• Maintain privacy, informed consent, confidentiality, and ethical AI standards.• Expected Outcomes• Early identification of highly distressed victims.• Prioritization of counselling and rehabilitation services.• Improved victim-centric grievance redressal.• Better allocation of support resources.• Enhanced responsiveness of the helpline and integrated portal ecosystem.• Stakeholders:• Department of Social Justice and Empowerment• National Helpline Against Atrocities (14566)• State Governments and Union Territories• District Administrations• Counsellors and Mental Health Professionals• Law Enforcement Agencies• Rehabilitation and Welfare Authorities
+                    <!-- Glowing Progress Bar -->
+                    <div class="w-full bg-slate-950 h-2.5 rounded-full overflow-hidden p-0.5 border border-amber-500/30">
+                        <div id="agitation-progress" class="bg-gradient-to-r from-amber-500 to-rose-500 h-full rounded-full transition-all duration-700 shadow-[0_0_10px_rgba(245,158,11,0.5)]" style="width: 87.4%"></div>
+                    </div>
+                </div>
+                <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                    <span>Jitter: <strong class="text-amber-300">5.2%</strong></span>
+                    <span>Shimmer: <strong class="text-amber-300">9.8%</strong></span>
+                    <span>Pause: <strong class="text-amber-300">62%</strong></span>
+                </div>
+            </div>
+
+            <!-- CARD 3: NLP Trauma Markers (Emerald Ring) -->
+            <div class="glass-panel-sharp rounded-2xl p-5 ring-neon-emerald flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-slate-900/90 via-slate-900/60 to-emerald-950/20">
+                <div class="flex items-center justify-between text-slate-400 text-xs font-mono font-semibold">
+                    <span class="flex items-center gap-1.5 text-slate-300">
+                        <i data-lucide="brain-circuit" class="w-4 h-4 text-emerald-400"></i>
+                        NLP TRAUMA MARKERS
+                    </span>
+                    <span class="text-[10px] text-emerald-400 font-mono font-bold">12 DIALECTS</span>
+                </div>
+                <div class="my-2 space-y-1.5">
+                    <div class="text-xs font-bold font-mono text-rose-400 flex items-center gap-1.5">
+                        <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-500 shrink-0"></i>
+                        <span id="nlp-status-text">IMMINENT THREAT & SOCIAL ISOLATION</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1.5 pt-1">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">CASTE_ASSAULT</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-500/20 text-rose-300 border border-rose-500/40">DEATH_THREAT</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">VILLAGE_BOYCOTT</span>
+                    </div>
+                </div>
+                <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-400">
+                    <span>SUICIDAL IDEATION: <strong class="text-rose-400 font-bold" id="suicide-flag">DETECTED</strong></span>
+                </div>
+            </div>
+
+            <!-- CARD 4: Glowing Flashing IMMEDIATE DISPATCH Alert Card -->
+            <div class="glass-panel-sharp rounded-2xl p-5 ring-neon-crimson animate-flash-alert flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-rose-950/80 via-slate-900 to-rose-900/40 cursor-pointer" onclick="openDispatchModal()">
+                <div class="flex items-center justify-between text-rose-300 text-xs font-mono font-black">
+                    <span class="flex items-center gap-1.5">
+                        <i data-lucide="siren" class="w-4 h-4 text-rose-400 animate-spin"></i>
+                        HELPLINE ACTION PROTOCOL
+                    </span>
+                    <span class="px-2 py-0.5 rounded bg-rose-500/30 text-rose-200 border border-rose-400 font-bold text-[10px]">TIER 1</span>
+                </div>
+                <div class="my-2 space-y-1">
+                    <div class="text-2xl font-black text-rose-400 tracking-wider flex items-center gap-2">
+                        <span>IMMEDIATE DISPATCH</span>
+                    </div>
+                    <p class="text-xs text-rose-200 font-medium leading-relaxed">
+                        Emergency Police Protection + Tele-MANAS Psychological Counseling unit assigned.
                     </p>
                 </div>
-                <div class="bg-slate-900/80 rounded-xl p-4 border border-slate-800 flex flex-col justify-between">
+                <div class="pt-2 border-t border-rose-800/80 flex items-center justify-between text-xs font-mono font-bold text-white">
+                    <span class="text-rose-300 flex items-center gap-1">
+                        <i data-lucide="shield" class="w-3.5 h-3.5"></i> Special Cell SP
+                    </span>
+                    <span class="px-2.5 py-1 rounded bg-rose-600 hover:bg-rose-500 text-white font-extrabold text-[11px] shadow-lg flex items-center gap-1">
+                        Trigger Units <i data-lucide="arrow-right" class="w-3 h-3"></i>
+                    </span>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SECTION 2: MIDDLE SPLIT LAYOUT (Matching Image 1) -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            <!-- LEFT COLUMN (7 Cols): Real-time Line Chart showing Stress Score vs Threshold -->
+            <div class="lg:col-span-7 glass-panel-sharp rounded-2xl p-6 space-y-4 border border-slate-800">
+                <div class="flex flex-wrap items-center justify-between gap-3">
                     <div>
-                        <span class="text-xs font-medium text-slate-400">Microservice Pipeline</span>
-                        <div class="text-lg font-bold text-slate-100 mt-1 flex items-center gap-2">
-                            <span class="h-2.5 w-2.5 rounded-full bg-brand-accent animate-ping"></span>
-                            FastAPI + ML Core
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="line-chart" class="w-5 h-5 text-rose-500"></i>
+                            <h3 class="text-base font-bold text-white tracking-wide">Real-Time Stress Score vs Critical Threshold</h3>
                         </div>
+                        <p class="text-xs text-slate-400 mt-0.5">Live acoustic instability stream (500ms intervals) plotted against statutory intervention trigger</p>
                     </div>
-                    <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono text-slate-400">
-                        <span>LATENCY: 24ms</span>
-                        <span>ACCURACY: 98.4%</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- KPI Metrics Grid -->
-        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="glass-panel rounded-xl p-5 space-y-2">
-                <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
-                    <span>Soil Saturation Index</span>
-                    <i data-lucide="activity" class="w-4 h-4 text-brand-accent"></i>
-                </div>
-                <div class="text-2xl font-extrabold text-white" id="metric1-display">84.6%</div>
-                <div class="text-xs text-emerald-400 flex items-center gap-1 font-mono">
-                    <i data-lucide="trending-up" class="w-3 h-3"></i> Real-time Telemetry Stream
-                </div>
-            </div>
-            
-            <div class="glass-panel rounded-xl p-5 space-y-2">
-                <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
-                    <span>Rainfall Rate (3-hr)</span>
-                    <i data-lucide="cpu" class="w-4 h-4 text-blue-400"></i>
-                </div>
-                <div class="text-2xl font-extrabold text-white" id="metric2-display">78.2 mm</div>
-                <div class="text-xs text-blue-400 flex items-center gap-1 font-mono">
-                    <i data-lucide="check-circle" class="w-3 h-3"></i> AI Dynamic Calibration
-                </div>
-            </div>
-
-            <div class="glass-panel rounded-xl p-5 space-y-2">
-                <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
-                    <span>Pore Pressure</span>
-                    <i data-lucide="gauge" class="w-4 h-4 text-purple-400"></i>
-                </div>
-                <div class="text-2xl font-extrabold text-white" id="metric3-display">142 kPa</div>
-                <div class="text-xs text-purple-400 flex items-center gap-1 font-mono">
-                    <i data-lucide="zap" class="w-3 h-3"></i> Edge Inferencing Active
-                </div>
-            </div>
-
-            <div class="glass-panel rounded-xl p-5 space-y-2">
-                <div class="flex items-center justify-between text-slate-400 text-xs font-medium">
-                    <span>System Integrity</span>
-                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
-                </div>
-                <div class="text-2xl font-extrabold text-emerald-400" id="integrity-display">OPTIMAL</div>
-                <div class="text-xs text-slate-400 flex items-center gap-1 font-mono">
-                    SHA-256 Audit Chaining
-                </div>
-            </div>
-        </section>
-
-        <!-- Interactive Visualizer & Controller Grid -->
-        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            
-            <!-- Main Real-time Chart Widget -->
-            <div class="lg:col-span-2 glass-panel rounded-2xl p-6 space-y-4">
-                <div class="flex flex-wrap items-center justify-between gap-2">
-                    <div>
-                        <h3 class="text-base font-bold text-slate-100 flex items-center gap-2">
-                            <i data-lucide="bar-chart-3" class="w-4 h-4 text-brand-accent"></i>
-                            Cumulative Rainfall vs Critical Slip Threshold (mm)
-                        </h3>
-                        <p class="text-xs text-slate-400">Live multi-spectral timeseries telemetry stream & rolling inference</p>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono bg-slate-800 text-slate-300 border border-slate-700">
-                            STREAM: 500ms POLLING
+                    <div class="flex items-center space-x-2 font-mono text-xs">
+                        <span class="px-2.5 py-1 rounded bg-rose-500/10 text-rose-400 border border-rose-500/30 flex items-center gap-1 font-bold">
+                            <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                            CRITICAL THRESHOLD: 75.0
+                        </span>
+                        <span class="px-2.5 py-1 rounded bg-slate-800 text-slate-300 border border-slate-700">
+                            STREAM: 500ms
                         </span>
                     </div>
                 </div>
-                <div class="h-72 w-full pt-2">
-                    <canvas id="telemetryChart"></canvas>
+
+                <!-- Chart Container -->
+                <div class="h-80 w-full pt-1">
+                    <canvas id="stressChart"></canvas>
+                </div>
+
+                <!-- Bottom Telemetry Badges -->
+                <div class="pt-3 border-t border-slate-800/80 grid grid-cols-3 gap-3 text-xs font-mono">
+                    <div class="p-2.5 rounded-xl bg-[#090d16]/90 border border-slate-800/90 flex items-center justify-between">
+                        <span class="text-slate-400">FEAR VECTOR:</span>
+                        <span class="text-rose-400 font-bold" id="fear-metric">91.4%</span>
+                    </div>
+                    <div class="p-2.5 rounded-xl bg-[#090d16]/90 border border-slate-800/90 flex items-center justify-between">
+                        <span class="text-slate-400">DESPAIR/ISOLATION:</span>
+                        <span class="text-amber-400 font-bold" id="despair-metric">86.2%</span>
+                    </div>
+                    <div class="p-2.5 rounded-xl bg-[#090d16]/90 border border-slate-800/90 flex items-center justify-between">
+                        <span class="text-slate-400">DISPATCH READINESS:</span>
+                        <span class="text-emerald-400 font-bold">100% READY</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Interactive Controller & Simulation Panel -->
-            <div class="glass-panel rounded-2xl p-6 flex flex-col justify-between space-y-4">
-                <div>
-                    <h3 class="text-base font-bold text-slate-100 flex items-center gap-2">
-                        <i data-lucide="sliders" class="w-4 h-4 text-brand-accent"></i>
-                        Interactive Controls
-                    </h3>
-                    <p class="text-xs text-slate-400 mt-1">Adjust live operational parameters and simulate edge conditions</p>
-                </div>
-
-                <div class="space-y-4">
-                    <div>
-                        <div class="flex justify-between text-xs font-medium mb-1">
-                            <span class="text-slate-300">Input Telemetry Intensity</span>
-                            <span class="text-brand-accent font-mono" id="slider-val">78.5</span>
+            <!-- RIGHT COLUMN (5 Cols): Live Transcript Terminal with Glowing Microphone Wave -->
+            <div class="lg:col-span-5 glass-panel-sharp rounded-2xl p-6 flex flex-col justify-between space-y-4 border border-slate-800">
+                
+                <!-- Terminal Header with Glowing Mic Wave -->
+                <div class="flex items-center justify-between pb-3 border-b border-slate-800/80">
+                    <div class="flex items-center space-x-3">
+                        <!-- Glowing Animated Microphone Wave Icon -->
+                        <div class="relative flex items-center justify-center h-10 w-10 rounded-xl bg-slate-900 border border-rose-500/60 shadow-[0_0_15px_rgba(244,63,94,0.4)]">
+                            <i data-lucide="mic" class="w-5 h-5 text-rose-400"></i>
+                            <!-- Pulsing Audio Waveform Bars behind mic -->
+                            <div class="absolute -right-8 flex items-center space-x-0.5 h-6">
+                                <span class="w-1 bg-rose-500 rounded-full audio-bar-1 shadow-[0_0_6px_#ff1e56]"></span>
+                                <span class="w-1 bg-amber-400 rounded-full audio-bar-2 shadow-[0_0_6px_#f59e0b]"></span>
+                                <span class="w-1 bg-rose-400 rounded-full audio-bar-3 shadow-[0_0_6px_#ff1e56]"></span>
+                                <span class="w-1 bg-amber-500 rounded-full audio-bar-4 shadow-[0_0_6px_#f59e0b]"></span>
+                                <span class="w-1 bg-rose-500 rounded-full audio-bar-5 shadow-[0_0_6px_#ff1e56]"></span>
+                            </div>
                         </div>
-                        <input type="range" id="telemetry-slider" min="10" max="150" value="78" step="1" 
-                            class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-brand-primary"
-                            oninput="updateSliderVal(this.value)">
+                        <div class="pl-7">
+                            <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                                Live Transcript Terminal
+                            </h3>
+                            <div class="flex items-center gap-1.5 text-[11px] font-mono text-emerald-400">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span>AUDIO INGESTION STREAMING (Bhashini AI)</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <div>
-                        <div class="flex justify-between text-xs font-medium mb-1">
-                            <span class="text-slate-300">Operational Anomaly Sensitivity</span>
-                            <span class="text-emerald-400 font-mono" id="sens-val">Normal (0.75)</span>
-                        </div>
-                        <select id="sensitivity-select" class="w-full bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg p-2 font-mono">
-                            <option value="0.60">High Sensitivity (Early Alert)</option>
-                            <option value="0.75" selected>Standard Balanced (0.75)</option>
-                            <option value="0.90">Strict Verification (High Threshold)</option>
-                        </select>
-                    </div>
-
-                    <div class="p-3.5 rounded-xl bg-slate-900/90 border border-slate-800 space-y-1.5 font-mono text-xs">
-                        <div class="text-slate-400 flex justify-between">
-                            <span>LAST EVENT ID:</span>
-                            <span class="text-slate-200" id="last-evt">EVT-592812</span>
-                        </div>
-                        <div class="text-slate-400 flex justify-between">
-                            <span>INTEGRITY HASH:</span>
-                            <span class="text-brand-accent truncate max-w-[120px]" id="last-hash">7f8c9b2a1e04</span>
-                        </div>
+                    <!-- Language Badge -->
+                    <div class="flex items-center gap-1.5 bg-slate-900 px-2.5 py-1 rounded-lg border border-slate-800 text-xs font-mono text-amber-400">
+                        <i data-lucide="languages" class="w-3.5 h-3.5"></i>
+                        <span>Hindi / Awadhi</span>
                     </div>
                 </div>
 
-                <button onclick="runSimulation()" class="w-full py-3 rounded-xl bg-gradient-to-r from-brand-primary to-brand-accent text-white text-xs font-bold hover:opacity-90 transition shadow-lg flex items-center justify-center space-x-2">
-                    <i data-lucide="zap" class="w-4 h-4"></i>
-                    <span>Execute Instant AI Assessment</span>
-                </button>
+                <!-- Streaming Transcript Terminal Box -->
+                <div class="bg-[#070a12] border border-slate-800/90 rounded-xl p-4 font-mono text-xs space-y-3 h-64 overflow-y-auto" id="transcript-stream">
+                    <div class="text-slate-500 text-[10px] flex items-center justify-between border-b border-slate-900 pb-1">
+                        <span>[SESSION: NHAA-9021] • [CHANNEL: 14566_IVRS_VOICE]</span>
+                        <span class="text-rose-400 font-bold animate-pulse">LIVE TRANSMISSION</span>
+                    </div>
+
+                    <div class="space-y-2 text-slate-300 leading-relaxed text-[12px]">
+                        <p class="text-slate-400">
+                            <span class="text-slate-600">[22:57:40]</span> <strong class="text-blue-400">OPERATOR:</strong> National Helpline Against Atrocities (14566). Please tell us your location and condition.
+                        </p>
+                        <p class="text-rose-200 bg-rose-950/20 p-2 rounded border-l-2 border-rose-500">
+                            <span class="text-slate-600">[22:57:48]</span> <strong class="text-rose-400">CALLER:</strong> "They came to our village home with iron rods and lathis... they beat my father and broke our door. They said if we report to the police they will kill all of us before morning!"
+                            <span class="inline-block ml-1 px-1.5 py-0.2 rounded bg-rose-600/40 text-rose-300 text-[10px] font-bold">[TRIGGER: IMMINENT_VIOLENCE]</span>
+                        </p>
+                        <p class="text-slate-400">
+                            <span class="text-slate-600">[22:58:02]</span> <strong class="text-blue-400">OPERATOR:</strong> Are you in a secure area right now? Are you injured?
+                        </p>
+                        <p class="text-rose-200 bg-rose-950/30 p-2 rounded border-l-2 border-rose-500">
+                            <span class="text-slate-600">[22:58:11]</span> <strong class="text-rose-400">CALLER:</strong> "No, we ran into the fields in the dark... my mother cannot walk. We have nowhere to go and we are terrified for our lives, please send someone immediately!"
+                            <span class="inline-block ml-1 px-1.5 py-0.2 rounded bg-rose-600/40 text-rose-300 text-[10px] font-bold">[TRIGGER: EXTREME_VULNERABILITY]</span>
+                            <span class="inline-block ml-1 px-1.5 py-0.2 rounded bg-amber-600/40 text-amber-300 text-[10px] font-bold">[SVI_SCORE: 92.6]</span>
+                        </p>
+                        <div id="new-stream-target"></div>
+                    </div>
+                </div>
+
+                <!-- Operator Control Strip -->
+                <div class="grid grid-cols-3 gap-2 pt-1">
+                    <button onclick="injectStreamLine()" class="py-2 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-mono font-semibold border border-slate-800 transition flex items-center justify-center gap-1.5">
+                        <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-400"></i>
+                        <span>Stream Next</span>
+                    </button>
+                    <button onclick="simulateAudioTremor()" class="py-2 px-3 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-200 text-xs font-mono font-semibold border border-slate-800 transition flex items-center justify-center gap-1.5">
+                        <i data-lucide="activity" class="w-3.5 h-3.5 text-amber-400"></i>
+                        <span>Spike Tremor</span>
+                    </button>
+                    <button onclick="openDispatchModal()" class="py-2 px-3 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-mono font-bold transition flex items-center justify-center gap-1.5 shadow-[0_0_10px_rgba(244,63,94,0.4)]">
+                        <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                        <span>Dispatch</span>
+                    </button>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SECTION 3: AUTOMATED EMERGENCY INTERVENTION PROTOCOL DISPATCH (Matching Image 2 Exactly) -->
+        <section class="space-y-4">
+            <div>
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i data-lucide="siren" class="w-4 h-4 text-rose-500"></i>
+                    Automated Emergency Intervention Protocol Dispatch
+                </h3>
+                <p class="text-xs text-slate-400 mt-0.5">
+                    Actionable decision support automatically mapped to the victim's evaluated Stress Vulnerability Index
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <!-- Card 1: Police Protection -->
+                <div class="p-5 rounded-2xl bg-[#0f172a]/80 border border-rose-900/40 hover:border-rose-600/60 transition flex flex-col justify-between space-y-3">
+                    <div class="space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-rose-400 flex items-center gap-1.5">
+                                <i data-lucide="shield-alert" class="w-4 h-4 text-rose-500"></i>
+                                Police Protection
+                            </span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 font-bold">
+                                TIER 1
+                            </span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white">Immediate Police & Witness Protection</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Alerts District Superintendent of Police (SP) and local PoA special cell for instant field deployment.
+                        </p>
+                    </div>
+                    <button onclick="executeDirectDispatch('POLICE_EMERGENCY_PROTECTION', 'Superintendent of Police (PoA Special Cell)')" class="w-full py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-rose-950/50">
+                        <i data-lucide="send" class="w-3.5 h-3.5"></i> Dispatch Police Unit
+                    </button>
+                </div>
+
+                <!-- Card 2: Trauma Counseling -->
+                <div class="p-5 rounded-2xl bg-[#0f172a]/80 border border-amber-900/40 hover:border-amber-600/60 transition flex flex-col justify-between space-y-3">
+                    <div class="space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-amber-400 flex items-center gap-1.5">
+                                <i data-lucide="heart-handshake" class="w-4 h-4 text-amber-400"></i>
+                                Trauma Counseling
+                            </span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold">
+                                TELE-MANAS
+                            </span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white">Crisis Psychological First Aid</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Routes call directly to a certified Tele-MANAS / MoSJE trauma psychologist specializing in caste atrocities.
+                        </p>
+                    </div>
+                    <button onclick="executeDirectDispatch('CRISIS_TRAUMA_COUNSELING', 'Tele-MANAS Crisis Mental Health Network')" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-amber-950/50">
+                        <i data-lucide="phone-call" class="w-3.5 h-3.5"></i> Connect Crisis Counselor
+                    </button>
+                </div>
+
+                <!-- Card 3: Legal Aid -->
+                <div class="p-5 rounded-2xl bg-[#0f172a]/80 border border-blue-900/40 hover:border-blue-600/60 transition flex flex-col justify-between space-y-3">
+                    <div class="space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-blue-400 flex items-center gap-1.5">
+                                <i data-lucide="scale" class="w-4 h-4 text-blue-400"></i>
+                                Legal Aid
+                            </span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-500/40 font-bold">
+                                DLSA
+                            </span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white">District Legal Services Authority</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Assigns dedicated free legal aid counsel under the SC/ST Prevention of Atrocities Act statutory guidelines.
+                        </p>
+                    </div>
+                    <button onclick="executeDirectDispatch('FREE_LEGAL_AID', 'District Legal Services Authority (DLSA)')" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-blue-950/50">
+                        <i data-lucide="scale" class="w-3.5 h-3.5"></i> Assign Legal Counsel
+                    </button>
+                </div>
+
+                <!-- Card 4: Medical & Relief -->
+                <div class="p-5 rounded-2xl bg-[#0f172a]/80 border border-emerald-900/40 hover:border-emerald-600/60 transition flex flex-col justify-between space-y-3">
+                    <div class="space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-emerald-400 flex items-center gap-1.5">
+                                <i data-lucide="ambulance" class="w-4 h-4 text-emerald-400"></i>
+                                Medical & Relief
+                            </span>
+                            <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-bold">
+                                RELIEF CELL
+                            </span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white">Emergency Medical Aid & Relief</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Dispatches emergency ambulance and triggers interim financial relief under PoA victim compensation schemes.
+                        </p>
+                    </div>
+                    <button onclick="executeDirectDispatch('EMERGENCY_MEDICAL_RELIEF', 'District Civil Hospital & Welfare Board')" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-950/50">
+                        <i data-lucide="ambulance" class="w-3.5 h-3.5"></i> Mobilize Relief Unit
+                    </button>
+                </div>
+
             </div>
         </section>
 
-        <!-- Live Event Audit Trail Log Table -->
-        <section class="glass-panel rounded-2xl p-6 space-y-4">
-            <div class="flex items-center justify-between">
+        <!-- SECTION 4: CRYPTOGRAPHIC DPDP-COMPLIANT TRAUMA ASSESSMENT LEDGER (Matching Image 2 Exactly) -->
+        <section class="bg-[#0f172a]/80 backdrop-blur-xl border border-slate-800 rounded-2xl shadow-2xl overflow-hidden">
+            
+            <!-- Table Header Bar -->
+            <div class="p-5 border-b border-slate-800 flex flex-wrap items-center justify-between gap-3">
                 <div>
-                    <h3 class="text-base font-bold text-slate-100 flex items-center gap-2">
+                    <div class="flex items-center gap-2">
                         <i data-lucide="history" class="w-4 h-4 text-emerald-400"></i>
-                        Tamper-Evident Operational Audit Ledger
-                    </h3>
-                    <p class="text-xs text-slate-400">Cryptographically verifiable log stream stored in PostgreSQL / TimescaleDB</p>
+                        <h3 class="text-sm font-bold text-white">
+                            Cryptographic DPDP-Compliant Trauma Assessment Ledger
+                        </h3>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-0.5">
+                        Tamper-evident SHA-256 audit chaining ensuring judicial admissibility under Indian Evidence Act & DPDP Act 2023
+                    </p>
                 </div>
-                <span class="text-xs font-mono text-slate-400">TOTAL LOGS: <span id="log-count">12</span></span>
+
+                <div class="flex items-center gap-4">
+                    <span class="text-xs font-mono text-slate-400 uppercase">
+                        TOTAL SESSIONS: <strong class="text-white font-bold" id="total-sessions-badge">9</strong>
+                    </span>
+                    <button onclick="exportAuditLedger()" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono border border-slate-700 transition flex items-center gap-1">
+                        <i data-lucide="download" class="w-3 h-3"></i> Export JSON
+                    </button>
+                </div>
             </div>
 
+            <!-- Ledger Table -->
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs font-mono">
-                    <thead class="text-slate-400 bg-slate-900/80 border-b border-slate-800">
+                    <thead class="text-slate-400 bg-[#080d1a] border-b border-slate-800 text-[11px]">
                         <tr>
-                            <th class="py-3 px-4">TIMESTAMP</th>
-                            <th class="py-3 px-4">EVENT ID</th>
-                            <th class="py-3 px-4">METRIC VALUE</th>
-                            <th class="py-3 px-4">RISK SCORE</th>
-                            <th class="py-3 px-4">CLASSIFICATION</th>
-                            <th class="py-3 px-4">ACTION PROTOCOL</th>
-                            <th class="py-3 px-4">INTEGRITY HASH</th>
+                            <th class="py-3.5 px-5">TIMESTAMP</th>
+                            <th class="py-3.5 px-5">CALL / SESSION ID</th>
+                            <th class="py-3.5 px-5">DIALECT</th>
+                            <th class="py-3.5 px-5">SVI SCORE</th>
+                            <th class="py-3.5 px-5">TRIAGE LEVEL</th>
+                            <th class="py-3.5 px-5">ACOUSTIC / NLP</th>
+                            <th class="py-3.5 px-5">ACTION PROTOCOL</th>
+                            <th class="py-3.5 px-5">INTEGRITY HASH</th>
                         </tr>
                     </thead>
-                    <tbody id="audit-table-body" class="divide-y divide-slate-800 text-slate-300">
+                    <tbody id="trauma-ledger-body" class="divide-y divide-slate-800 text-slate-300">
                         <!-- Dynamic Rows Injected Here -->
                     </tbody>
                 </table>
             </div>
+
+            <!-- Table Footer -->
+            <div class="p-3.5 bg-[#080d1a] border-t border-slate-800/80 flex flex-wrap items-center justify-between text-[11px] font-mono text-slate-400">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#10b981] animate-pulse"></span>
+                    <span>AUDIT CHAIN INTEGRITY: 100% SECURE & VERIFIED</span>
+                </div>
+                <div class="flex items-center gap-4">
+                    <span>STANDARD: ISO/IEC 27001 & DPDP 2023</span>
+                </div>
+            </div>
+
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="glass-panel border-t border-slate-800 px-6 py-4 mt-auto flex flex-wrap items-center justify-between text-xs text-slate-400">
-        <div>
-            Smart India Hackathon 2026 • Problem Statement <strong class="text-slate-200">SIH26093</strong>
-        </div>
-        <div class="flex items-center space-x-4">
-            <a href="solution.md" target="_blank" class="text-brand-accent hover:underline flex items-center gap-1">
-                <i data-lucide="file-text" class="w-3.5 h-3.5"></i> Architecture Whitepaper
-            </a>
-            <a href="http://127.0.0.1:8000/docs" target="_blank" class="text-brand-accent hover:underline flex items-center gap-1">
-                <i data-lucide="code" class="w-3.5 h-3.5"></i> FastAPI Swagger UI
-            </a>
-        </div>
-    </footer>
+    <!-- Emergency Dispatch Protocol Modal -->
+    <div id="dispatch-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-panel-sharp rounded-2xl max-w-lg w-full p-6 space-y-4 ring-neon-crimson bg-[#0B0F19]">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2 text-rose-400 font-bold">
+                    <i data-lucide="siren" class="w-5 h-5"></i>
+                    <span>EMERGENCY PROTOCOL DISPATCH CONFIRMATION</span>
+                </div>
+                <button onclick="closeDispatchModal()" class="text-slate-400 hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-3 text-xs font-mono text-slate-300">
+                <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                    <div class="flex justify-between text-slate-400"><span>SESSION ID:</span> <span class="text-white font-bold">NHAA-2026-8600</span></div>
+                    <div class="flex justify-between text-slate-400"><span>EVALUATED SVI:</span> <span class="text-rose-400 font-extrabold text-sm">92.6 / 100 (CRITICAL)</span></div>
+                    <div class="flex justify-between text-slate-400"><span>JURISDICTION:</span> <span class="text-slate-200">District PoA Special Cell, Uttar Pradesh</span></div>
+                    <div class="flex justify-between text-slate-400"><span>INTEGRITY HASH:</span> <span class="text-rose-400">3bdc8b01c2c2b145</span></div>
+                </div>
 
-    <!-- Interactive Script -->
+                <div class="space-y-2">
+                    <label class="font-bold text-slate-200 block">Select Primary Action Protocol:</label>
+                    <div class="space-y-1.5">
+                        <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900/90 border border-rose-500/40 cursor-pointer">
+                            <input type="radio" name="protocol" checked class="accent-rose-500" value="POLICE_EMERGENCY_PROTECTION">
+                            <span>🚨 Immediate Police Protection & Witness Escort</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900/90 border border-slate-800 cursor-pointer">
+                            <input type="radio" name="protocol" class="accent-rose-500" value="TELE_MANAS_CRISIS_AID">
+                            <span>🧠 Tele-MANAS Crisis Psychological First Aid Unit</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2 rounded-lg bg-slate-900/90 border border-slate-800 cursor-pointer">
+                            <input type="radio" name="protocol" class="accent-rose-500" value="DLSA_LEGAL_COUNSEL">
+                            <span>⚖️ District Legal Services Authority (DLSA) Free Legal Aid</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-end gap-3 pt-2">
+                <button onclick="closeDispatchModal()" class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono font-bold transition">
+                    Cancel
+                </button>
+                <button onclick="executeDispatchFromModal()" class="px-5 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-mono font-extrabold shadow-[0_0_15px_rgba(244,63,94,0.5)] transition flex items-center gap-1.5">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i> Confirm Immediate Dispatch
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast-notification" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="glass-panel-sharp rounded-xl p-4 ring-neon-emerald flex items-center gap-3 bg-[#0B0F19] text-xs font-mono shadow-2xl">
+            <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i>
+            <div>
+                <div class="font-bold text-white" id="toast-title">Dispatched Successfully</div>
+                <div class="text-slate-400 text-[11px]" id="toast-body">Responder unit deployed with SHA-256 integrity confirmation.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive JavaScript Implementation -->
     <script>
         lucide.createIcons();
 
-        // Chart.js Setup
-        const ctx = document.getElementById('telemetryChart').getContext('2d');
-        const initialLabels = ['10:00', '10:05', '10:10', '10:15', '10:20', '10:25', '10:30', '10:35', '10:40', '10:45'];
-        const initialData = [45, 52, 48, 61, 58, 65, 72, 68, 79, 84];
+        // Chart.js Real-time Line Chart: Stress Score vs Critical Threshold
+        const ctx = document.getElementById('stressChart').getContext('2d');
+        const labels = ['22:50', '22:51', '22:52', '22:53', '22:54', '22:55', '22:56', '22:57', '22:58'];
+        const stressScores = [58.2, 64.0, 71.5, 68.4, 76.0, 81.2, 86.8, 89.5, 92.6];
+        const thresholdLine = [75.0, 75.0, 75.0, 75.0, 75.0, 75.0, 75.0, 75.0, 75.0];
 
-        const chart = new Chart(ctx, {
+        const stressChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: initialLabels,
-                datasets: [{
-                    label: 'Cumulative Rainfall vs Critical Slip Threshold (mm)',
-                    data: initialData,
-                    borderColor: '#ef4444',
-                    backgroundColor: '#ef444433',
-                    borderWidth: 2,
-                    tension: 0.3,
-                    fill: true,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#f87171'
-                }]
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Stress Score (SVI)',
+                        data: stressScores,
+                        borderColor: '#ff1e56',
+                        backgroundColor: 'rgba(255, 30, 86, 0.22)',
+                        borderWidth: 3,
+                        tension: 0.35,
+                        fill: true,
+                        pointRadius: 5,
+                        pointBackgroundColor: '#ff1e56',
+                        pointBorderColor: '#ffffff',
+                        pointBorderWidth: 1.5,
+                        pointHoverRadius: 7
+                    },
+                    {
+                        label: 'Critical Threshold (75.0 SVI)',
+                        data: thresholdLine,
+                        borderColor: '#f59e0b',
+                        borderWidth: 2,
+                        borderDash: [6, 6],
+                        fill: false,
+                        pointRadius: 0
+                    }
+                ]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { labels: { color: '#94a3b8', font: { family: 'JetBrains Mono', size: 11 } } }
+                    legend: {
+                        labels: {
+                            color: '#94a3b8',
+                            font: { family: 'JetBrains Mono', size: 11, weight: 'bold' },
+                            usePointStyle: true
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: '#070b14',
+                        titleFont: { family: 'JetBrains Mono', size: 12 },
+                        bodyFont: { family: 'JetBrains Mono', size: 12 },
+                        borderColor: 'rgba(255, 30, 86, 0.5)',
+                        borderWidth: 1,
+                        padding: 10
+                    }
                 },
                 scales: {
-                    x: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { family: 'JetBrains Mono' } } },
-                    y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8', font: { family: 'JetBrains Mono' } } }
+                    x: {
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8', font: { family: 'JetBrains Mono', size: 10 } }
+                    },
+                    y: {
+                        min: 30,
+                        max: 100,
+                        grid: { color: 'rgba(255,255,255,0.05)' },
+                        ticks: { color: '#94a3b8', font: { family: 'JetBrains Mono', size: 10 } }
+                    }
                 }
             }
         });
 
-        let logs = [
-            { time: '10:45:12', id: 'EVT-592812', val: 84.6, risk: 0.84, status: 'ANOMALY', action: 'DISPATCH_ALERT', hash: '7f8c9b2a1e04' },
-            { time: '10:40:08', id: 'EVT-592811', val: 79.2, risk: 0.65, status: 'NORMAL', action: 'MONITORING', hash: '4a3b2c1d9e8f' },
-            { time: '10:35:19', id: 'EVT-592810', val: 68.4, risk: 0.52, status: 'NORMAL', action: 'MONITORING', hash: '9b8a7c6d5e4f' },
-            { time: '10:30:44', id: 'EVT-592809', val: 72.1, risk: 0.58, status: 'NORMAL', action: 'MONITORING', hash: '1e2f3a4b5c6d' }
+        // Exact Sessions matching Image 2
+        let ledgerSessions = [
+            {
+                time: "22:56:07",
+                id: "NHAA-2026-8600",
+                dialect: "Hindi",
+                svi: "92.6",
+                triage: "CRITICAL",
+                acousticNlp: "83.5%",
+                action: "TRIGGER_IMMEDIATE_EMERGENCY_INTE..",
+                hash: "3bdc8b01c2c2b145",
+                isRedHash: true
+            },
+            {
+                time: "22:56:06",
+                id: "NHAA-2026-9488",
+                dialect: "Hindi",
+                svi: "92.6",
+                triage: "CRITICAL",
+                acousticNlp: "83.5%",
+                action: "TRIGGER_IMMEDIATE_EMERGENCY_INTE..",
+                hash: "a79b810e9fca5c35",
+                isRedHash: true
+            },
+            {
+                time: "22:56:05",
+                id: "NHAA-2026-9374",
+                dialect: "Hindi",
+                svi: "92.6",
+                triage: "CRITICAL",
+                acousticNlp: "83.5%",
+                action: "TRIGGER_IMMEDIATE_EMERGENCY_INTE..",
+                hash: "4bdc30ba625a7738",
+                isRedHash: true
+            },
+            {
+                time: "22:55:57",
+                id: "NHAA-2026-6138",
+                dialect: "Hindi",
+                svi: "92.6",
+                triage: "CRITICAL",
+                acousticNlp: "83.5%",
+                action: "TRIGGER_IMMEDIATE_EMERGENCY_INTE..",
+                hash: "4a0e3e9aa177a03d",
+                isRedHash: true
+            },
+            {
+                time: "10:45:12",
+                id: "NHAA-2026-9014",
+                dialect: "Hindi",
+                svi: "84.6",
+                triage: "CRITICAL",
+                acousticNlp: "78.2%",
+                action: "DISPATCH_POLICE_AND_CRISIS_COUNS..",
+                hash: "e3b0c44298fc",
+                isHighlightBadge: true
+            },
+            {
+                time: "10:40:08",
+                id: "NHAA-2026-9013",
+                dialect: "Marathi",
+                svi: "68.2",
+                triage: "HIGH",
+                acousticNlp: "62.0%",
+                action: "ASSIGN_DLSA_LEGAL_AID",
+                hash: "7a8b9c1d2e3f"
+            },
+            {
+                time: "10:35:19",
+                id: "NHAA-2026-9012",
+                dialect: "Tamil",
+                svi: "46.5",
+                triage: "MODERATE",
+                acousticNlp: "44.0%",
+                action: "SCHEDULE_WELFARE_CHECK",
+                hash: "4f5a6b7c8d9e"
+            },
+            {
+                time: "10:30:44",
+                id: "NHAA-2026-9011",
+                dialect: "Hindi",
+                svi: "79.4",
+                triage: "CRITICAL",
+                acousticNlp: "75.8%",
+                action: "DISPATCH_POLICE_AND_CRISIS_COUNS..",
+                hash: "9e8d7c6b5a4f"
+            },
+            {
+                time: "10:24:15",
+                id: "NHAA-2026-9010",
+                dialect: "English",
+                svi: "18.2",
+                triage: "LOW",
+                acousticNlp: "21.0%",
+                action: "STANDARD_RECORDING",
+                hash: "1a2b3c4d5e6f"
+            }
         ];
 
-        function renderLogs() {
-            const tbody = document.getElementById('audit-table-body');
-            tbody.innerHTML = logs.map(l => `
-                <tr class="hover:bg-slate-800/50 transition">
-                    <td class="py-2.5 px-4">${l.time}</td>
-                    <td class="py-2.5 px-4 text-slate-200 font-bold">${l.id}</td>
-                    <td class="py-2.5 px-4">${l.val}</td>
-                    <td class="py-2.5 px-4">${l.risk}</td>
-                    <td class="py-2.5 px-4">
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${l.status === 'ANOMALY' ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30' : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'}">
-                            ${l.status}
-                        </span>
-                    </td>
-                    <td class="py-2.5 px-4 text-slate-300">${l.action}</td>
-                    <td class="py-2.5 px-4 text-brand-accent">${l.hash}</td>
-                </tr>
-            `).join('');
-            document.getElementById('log-count').textContent = logs.length;
+        function renderLedger() {
+            const tbody = document.getElementById('trauma-ledger-body');
+            tbody.innerHTML = ledgerSessions.map((s, idx) => {
+                let triageClass = 'bg-rose-500/20 text-rose-400 border border-rose-500/40';
+                let sviClass = 'text-rose-500 font-bold';
+                if (s.triage === 'HIGH') {
+                    triageClass = 'bg-amber-500/20 text-amber-400 border border-amber-500/40';
+                    sviClass = 'text-amber-400 font-bold';
+                } else if (s.triage === 'MODERATE') {
+                    triageClass = 'bg-amber-500/20 text-amber-300 border border-amber-500/40';
+                    sviClass = 'text-amber-300 font-bold';
+                } else if (s.triage === 'LOW') {
+                    triageClass = 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40';
+                    sviClass = 'text-emerald-400 font-bold';
+                }
+
+                let hashHtml = `<span class="${s.isRedHash ? 'text-rose-500 font-mono font-bold' : s.isHighlightBadge ? 'px-2 py-0.5 rounded bg-rose-600/40 text-white font-mono font-bold border border-rose-500' : 'text-slate-400 font-mono'}">${s.hash}</span>`;
+
+                return `
+                    <tr class="hover:bg-slate-800/40 transition">
+                        <td class="py-3 px-5 text-slate-400 whitespace-nowrap">${s.time}</td>
+                        <td class="py-3 px-5 font-bold text-white whitespace-nowrap">${s.id}</td>
+                        <td class="py-3 px-5 text-slate-300 whitespace-nowrap">${s.dialect}</td>
+                        <td class="py-3 px-5 ${sviClass} whitespace-nowrap">${s.svi}</td>
+                        <td class="py-3 px-5 whitespace-nowrap">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${triageClass}">
+                                ${s.triage}
+                            </span>
+                        </td>
+                        <td class="py-3 px-5 text-slate-400 whitespace-nowrap">${s.acousticNlp}</td>
+                        <td class="py-3 px-5 text-slate-300 whitespace-nowrap max-w-[220px] truncate" title="${s.action}">${s.action}</td>
+                        <td class="py-3 px-5 whitespace-nowrap">
+                            <div class="inline-flex items-center gap-1.5">
+                                ${hashHtml}
+                                <button onclick="copyHashText('${s.hash}', this)" title="Copy Hash" class="text-slate-500 hover:text-slate-200 transition">
+                                    <i data-lucide="copy" class="w-3 h-3"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            document.getElementById('total-sessions-badge').textContent = ledgerSessions.length;
+            lucide.createIcons();
         }
-        renderLogs();
 
-        function updateSliderVal(val) {
-            document.getElementById('slider-val').textContent = val;
+        renderLedger();
+
+        function copyHashText(hash, btn) {
+            navigator.clipboard.writeText(hash);
+            showToast("HASH COPIED", `${hash} copied to clipboard`);
         }
 
-        function runSimulation() {
-            const sliderVal = parseFloat(document.getElementById('telemetry-slider').value);
-            const now = new Date();
-            const timeStr = now.toTimeString().split(' ')[0];
-            const newVal = (sliderVal * (0.9 + Math.random() * 0.25)).toFixed(1);
-            const risk = (newVal / 100 * (0.8 + Math.random() * 0.3)).toFixed(2);
-            const isAnomaly = risk > 0.70;
-            const evtId = 'EVT-' + Math.floor(100000 + Math.random() * 900000);
-            const hash = Math.random().toString(36).substring(2, 14);
-
-            // Update KPI metric display
-            document.getElementById('metric1-display').textContent = newVal + (newVal > 100 ? ' pts' : '%');
-            document.getElementById('last-evt').textContent = evtId;
-            document.getElementById('last-hash').textContent = hash;
-
-            // Update Chart
-            chart.data.labels.push(timeStr);
-            chart.data.datasets[0].data.push(newVal);
-            if (chart.data.labels.length > 12) {
-                chart.data.labels.shift();
-                chart.data.datasets[0].data.shift();
+        // Direct Execution of 4 Emergency Dispatch Buttons
+        async function executeDirectDispatch(protocol, agency) {
+            const currentSession = ledgerSessions[0].id;
+            try {
+                await fetch('http://127.0.0.1:8000/api/v1/action/dispatch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        event_id: 'EVT-' + Math.floor(100000 + Math.random() * 900000),
+                        call_id: currentSession,
+                        protocol_type: protocol,
+                        assigned_agency: agency,
+                        priority: 'EMERGENCY'
+                    })
+                });
+            } catch (e) {
+                console.warn("Backend dispatch offline, using simulated logging", e);
             }
-            chart.update();
 
-            // Insert into logs
-            logs.unshift({
-                time: timeStr,
-                id: evtId,
-                val: newVal,
-                risk: risk,
-                status: isAnomaly ? 'ANOMALY' : 'NORMAL',
-                action: isAnomaly ? 'TRIGGER_EMERGENCY_DISPATCH' : 'CONTINUE_MONITORING',
-                hash: hash
-            });
-            if (logs.length > 20) logs.pop();
-            renderLogs();
+            const now = new Date().toTimeString().split(' ')[0];
+            const newEvt = {
+                time: now,
+                id: 'NHAA-2026-' + Math.floor(1000 + Math.random() * 9000),
+                dialect: "Hindi",
+                svi: "92.6",
+                triage: "CRITICAL",
+                acousticNlp: "83.5%",
+                action: protocol,
+                hash: Math.random().toString(36).substring(2, 18),
+                isRedHash: true
+            };
+            ledgerSessions.unshift(newEvt);
+            renderLedger();
+
+            showToast("DISPATCH MOBILIZED", `${protocol.replace(/_/g, ' ')} deployed to ${agency}`);
         }
 
-        function exportData() {
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(logs, null, 2));
+        // Streaming Transcript logic
+        const EXTRA_LINES = [
+            `CALLER: "They told our neighbours nobody can sell us food or let us draw water from the village well."`,
+            `CALLER: "I cannot sleep, my hands are trembling... I just want my family to be safe."`,
+            `OPERATOR: "Stay on the line. The District Special Cell and local Police Station have received your GPS coordinates."`
+        ];
+        let streamIdx = 0;
+
+        function injectStreamLine() {
+            if (streamIdx >= EXTRA_LINES.length) streamIdx = 0;
+            const target = document.getElementById('new-stream-target');
+            const p = document.createElement('p');
+            p.className = "text-rose-200 bg-rose-950/30 p-2 rounded border-l-2 border-rose-500 animate-pulse";
+            const now = new Date().toTimeString().split(' ')[0];
+            p.innerHTML = `<span class="text-slate-600">[${now}]</span> <strong class="text-rose-400">STREAM UPDATE:</strong> ${EXTRA_LINES[streamIdx]}`;
+            target.appendChild(p);
+            streamIdx++;
+            const container = document.getElementById('transcript-stream');
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function simulateAudioTremor() {
+            const currentVal = parseFloat(document.getElementById('agitation-percentage').textContent);
+            const newVal = Math.min(Math.round(currentVal + (Math.random() * 5 - 2)), 98);
+            document.getElementById('agitation-percentage').textContent = newVal + '%';
+            document.getElementById('agitation-progress').style.width = newVal + '%';
+            document.getElementById('pitch-hz').textContent = Math.round(290 + newVal * 0.8) + ' Hz';
+            showToast("Audio Tremor Spiked", `Vocal pitch instability elevated to ${newVal}%`);
+        }
+
+        function triggerEmergencySim() {
+            document.getElementById('top-svi-display').innerHTML = `94.8<span class="text-xl text-rose-400/80 font-normal">/100</span>`;
+            document.getElementById('agitation-percentage').textContent = '91.2%';
+            document.getElementById('agitation-progress').style.width = '91.2%';
+            document.getElementById('fear-metric').textContent = '96.5%';
+            document.getElementById('despair-metric').textContent = '92.0%';
+
+            const timeNow = new Date().toTimeString().split(' ')[0].substring(0, 5);
+            stressChart.data.labels.push(timeNow);
+            stressChart.data.datasets[0].data.push(94.8);
+            stressChart.data.datasets[1].data.push(75.0);
+            if (stressChart.data.labels.length > 10) {
+                stressChart.data.labels.shift();
+                stressChart.data.datasets[0].data.shift();
+                stressChart.data.datasets[1].data.shift();
+            }
+            stressChart.update();
+            showToast("CRITICAL INTAKE SIMULATED", "SVI Score escalated to 94.8/100. Emergency protocols triggered.");
+        }
+
+        function openDispatchModal() {
+            document.getElementById('dispatch-modal').classList.remove('hidden');
+        }
+
+        function closeDispatchModal() {
+            document.getElementById('dispatch-modal').classList.add('hidden');
+        }
+
+        function executeDispatchFromModal() {
+            closeDispatchModal();
+            executeDirectDispatch("EMERGENCY_POLICE_AND_CRISIS_DISPATCH", "District SP Special Cell & Tele-MANAS");
+        }
+
+        function exportAuditLedger() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(ledgerSessions, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", "SIH26093_audit_log.json");
+            downloadAnchor.setAttribute("download", "SIH26093_DPDP_Trauma_Ledger.json");
             document.body.appendChild(downloadAnchor);
             downloadAnchor.click();
             downloadAnchor.remove();
+        }
+
+        function showToast(title, body) {
+            const toast = document.getElementById('toast-notification');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-body').textContent = body;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+                toast.classList.remove('translate-y-0', 'opacity-100');
+            }, 4000);
         }
     </script>
 </body>
